@@ -14,7 +14,7 @@ import java.util.List;
 
 public class FDBHelper {
 
-  public static int FDB_API_VERSION = 710;
+  public static int FDB_API_VERSION = 620;
 
   public static int MAX_TRANSACTION_COMMIT_RETRY_TIMES = 20;
 
