@@ -3,7 +3,7 @@ package CSCI485ClassProject;
 import java.util.HashMap;
 import CSCI485ClassProject.StatusCode;
 import CSCI485ClassProject.models.AttributeType;
-import CSCI485ClassProject.models.TableMetadata;
+import CSCI485ClassProject.TableMetadata;
 
 /**
  * TableManager defines the interfaces that need to be implemented to support the table
