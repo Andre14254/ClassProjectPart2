@@ -1,6 +1,8 @@
 package CSCI485ClassProject.models;
 
 import CSCI485ClassProject.StatusCode;
+import CSCI485ClassProject.models.TableMetadata;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
