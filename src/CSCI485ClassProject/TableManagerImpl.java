@@ -3,6 +3,8 @@ import com.apple.foundationdb.Transaction;
 import com.apple.foundationdb.directory.DirectorySubspace;
 
 import CSCI485ClassProject.StatusCode;
+import CSCI485ClassProject.FDBHelper;
+
 import CSCI485ClassProject.models.AttributeType;
 import CSCI485ClassProject.models.TableMetadata;
 import CSCI485ClassProject.TableMetadataTransformer;
