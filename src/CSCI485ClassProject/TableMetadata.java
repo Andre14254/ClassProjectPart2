@@ -1,3 +1,5 @@
+package CSCI485ClassProject;
+
 import CSCI485ClassProject.StatusCode;
 
 import CSCI485ClassProject.AttributeType;
