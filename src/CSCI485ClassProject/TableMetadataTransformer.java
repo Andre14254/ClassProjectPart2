@@ -1,6 +1,9 @@
 import com.apple.foundationdb.tuple.Tuple;
 
 import CSCI485ClassProject.StatusCode;
+import CSCI485ClassProject.DBConf;
+
+import CSCI485ClassProject.FDBKVPair;
 import CSCI485ClassProject.models.AttributeType;
 
 import java.util.ArrayList;
