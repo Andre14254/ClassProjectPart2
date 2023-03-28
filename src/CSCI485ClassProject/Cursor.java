@@ -3,10 +3,8 @@ package CSCI485ClassProject;
 import com.apple.foundationdb.*;
 import com.apple.foundationdb.async.AsyncIterable;
 import com.apple.foundationdb.async.AsyncIterator;
-import com.apple.foundationdb.tuple.Tuple;
-import com.apple.foundationdb.tuple.TupleHelpers;
 
-import java.util.*;
+import java.nio.ByteBuffer;
 import java.util.concurrent.CompletableFuture;
 
 public class Cursor {
@@ -48,19 +46,19 @@ public class Cursor {
         KeyValue kv = resultIterator.next();
         currKey = kv.getKey();
         currValue = kv.getValue();
-        return new Record(Tuple.fromBytes(currKey), Tuple.fromBytes(currValue));
+        return new Record(ByteBuffer.wrap(currKey), ByteBuffer.wrap(currValue));
     }
 
     public Record getCurrentRecord() {
         if (currKey == null || currValue == null) {
             return null;
         }
-        return new Record(Tuple.fromBytes(currKey), Tuple.fromBytes(currValue));
+        return new Record(ByteBuffer.wrap(currKey), ByteBuffer.wrap(currValue));
     }
 
     public void updateCurrentRecord(Record record) {
-        byte[] newKey = TupleHelpers.toBytes(record.getPrimaryKey());
-        byte[] newValue = TupleHelpers.toBytes(record.getAttrs());
+        byte[] newKey = record.getPrimaryKey().array();
+        byte[] newValue = record.getAttrs().array();
         tr.clear(currKey);
         tr.set(newKey, newValue);
         currKey = newKey;
