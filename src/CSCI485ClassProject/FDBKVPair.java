@@ -1,3 +1,5 @@
+package CSCI485ClassProject;
+
 import com.apple.foundationdb.tuple.Tuple;
 
 import java.util.List;
