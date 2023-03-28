@@ -5,3 +5,4 @@ public class Cursor {
     READ,
     READ_WRITE
   }
+}
