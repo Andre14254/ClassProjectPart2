@@ -9,6 +9,7 @@ import CSCI485ClassProject.FDBKVPair;
 import CSCI485ClassProject.models.AttributeType;
 import CSCI485ClassProject.models.TableMetadata;
 import CSCI485ClassProject.TableMetadataTransformer;
+import CSCI485ClassProject.TableManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
