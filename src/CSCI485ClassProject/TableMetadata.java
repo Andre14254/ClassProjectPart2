@@ -1,5 +1,6 @@
 import CSCI485ClassProject.StatusCode;
 
+import CSCI485ClassProject.AttributeType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
