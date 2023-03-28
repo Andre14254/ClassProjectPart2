@@ -6,7 +6,7 @@ import CSCI485ClassProject.StatusCode;
 import CSCI485ClassProject.FDBHelper;
 import CSCI485ClassProject.FDBKVPair;
 
-import CSCI485ClassProject.models.AttributeType;
+import CSCI485ClassProject.AttributeType;
 import CSCI485ClassProject.TableMetadata;
 import CSCI485ClassProject.TableMetadataTransformer;
 import CSCI485ClassProject.TableManager;
