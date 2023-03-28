@@ -1,5 +1,8 @@
 import com.apple.foundationdb.tuple.Tuple;
 
+import CSCI485ClassProject.StatusCode;
+import CSCI485ClassProject.models.AttributeType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
