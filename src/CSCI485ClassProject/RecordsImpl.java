@@ -14,6 +14,7 @@ import CSCI485ClassProject.models.Record;
 
 public class RecordsImpl implements Records {
     private final FDBHelper fdbHelper;
+    private final Database db;
 
     public RecordsImpl(FDBHelper fdbHelper) {
         this.fdbHelper = fdbHelper;
