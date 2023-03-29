@@ -1,6 +1,4 @@
-import com.apple.foundationdb.KeyValue;
-import com.apple.foundationdb.StreamingMode;
-import com.apple.foundationdb.Transaction;
+import com.apple.foundationdb.*;
 import com.apple.foundationdb.directory.DirectorySubspace;
 import com.apple.foundationdb.tuple.Tuple;
 import CSCI485ClassProject.Cursor;
@@ -29,8 +27,8 @@ public class FoundationDBCursor implements Cursor {
         updateResults(null);
     }
 
-    private void updateResults(Tuple continuation) {
-        List<KeyValue> results = tx.getRange(tableSubspace.range(), streamingMode, continuation, null, 10).asList().join();
+    private void updateResults(byte[] continuation) {
+        List<KeyValue> results = tx.getRange(tableSubspace.range().startsWith(Tuple.from(attrName, attrValue)), new RangeOptions().setLimit(10).setContinuation(continuation)).join();
         currentResult = results.toArray(new KeyValue[0]);
     }
 
