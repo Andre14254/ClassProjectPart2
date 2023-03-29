@@ -40,6 +40,17 @@ public class RecordsImpl implements Records {
             if (existingRecordValue != null) {
                 return StatusCode.DATA_RECORD_CREATION_RECORD_ALREADY_EXISTS;
             }
+            
+            for (int i =0;i<attrNames.length;i++){
+                Object attr = attrValues[i];
+  AttributeType expectedType = tableAttributesNew.get(attrNames[i]);
+  if (!isValidAttributeType(attr, expectedType)) {
+    FDBHelper.abortTransaction(tx);
+    FDBHelper.closeTransaction(tx);
+    return StatusCode.DATA_RECORD_CREATION_ATTRIBUTE_TYPE_UNMATCHED;
+  }
+    }
+}
 
             // Construct the record tuple
             Tuple recordTuple = Tuple.from(attrValues);
@@ -57,6 +68,19 @@ public class RecordsImpl implements Records {
             return StatusCode.DATA_RECORD_PRIMARY_KEYS_UNMATCHED;
         }
     }
+
+    private boolean isValidAttributeType(Object attr, AttributeType expectedType) {
+  if (expectedType == AttributeType.VARCHAR && attr instanceof String) {
+    return true;
+  }
+  if (expectedType == AttributeType.INT && (attr instanceof Integer || attr instanceof Long)) {
+    return true;
+  }
+  if (expectedType == AttributeType.DOUBLE && attr instanceof Double) {
+    return true;
+  }
+  return false;
+}
 
     @Override
     public Cursor openCursor(String tableName, String attrName, Object attrValue, ComparisonOperator operator, Cursor.Mode mode, boolean isUsingIndex) {
