@@ -43,7 +43,7 @@ public class RecordsImpl implements Records {
             if (existingRecordValue != null) {
                 return StatusCode.DATA_RECORD_CREATION_RECORD_ALREADY_EXISTS;
             }
-            TableMetadata tabMeta = db.getMetadata().getTableMetadata(Collections.singletonList(tableName));
+TableMetadata tabMeta = RecordsHelper.convertNameToTableMetaData(db, tx, tableName);
             HashMap<String, AttributeType> m = tabMeta.getAttributes();
             for (int i =0;i<attrNames.length;i++){
                 Object attr = attrValues[i];
