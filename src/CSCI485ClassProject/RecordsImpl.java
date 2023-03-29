@@ -43,9 +43,9 @@ public class RecordsImpl implements Records {
             if (existingRecordValue != null) {
                 return StatusCode.DATA_RECORD_CREATION_RECORD_ALREADY_EXISTS;
             }
-TableMetadataTransformer tblTransformer = new TableMetadataTransformer(tblName);
+TableMetadataTransformer tblTransformer = new TableMetadataTransformer(tableName);
       List<String> tblAttributeDirPath = tblTransformer.getTableAttributeStorePath();
-      List<FDBKVPair> kvPairs = FDBHelper.getAllKeyValuePairsOfSubdirectory(db, readTx, tblAttributeDirPath);
+      List<FDBKVPair> kvPairs = FDBHelper.getAllKeyValuePairsOfSubdirectory(db, tx, tblAttributeDirPath);
       TableMetadata tabMeta = tblTransformer.convertBackToTableMetadata(kvPairs);
             HashMap<String, AttributeType> m = tabMeta.getAttributes();
             for (int i =0;i<attrNames.length;i++){
