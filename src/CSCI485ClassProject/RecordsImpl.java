@@ -17,7 +17,7 @@ public class RecordsImpl implements Records {
     private final FDBHelper fdbHelper;
     private final Database db;
 
-    public RecordsImpl(FDBHelper fdbHelper) {
+    public RecordsImpl() {
         this.fdbHelper = fdbHelper;
         db = FDBHelper.initialization();
     }
