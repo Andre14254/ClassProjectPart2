@@ -48,51 +48,7 @@ public class RecordsImpl implements Records {
 
     @Override
     public Cursor openCursor(String tableName, String attrName, Object attrValue, ComparisonOperator operator, Cursor.Mode mode, boolean isUsingIndex) {
-        List<String> path = new ArrayList<>();
-        path.add(tableName);
-
-        // Open directory subspace
-        Transaction tx = dbHelper.openTransaction(dbHelper.initialization());
-        DirectorySubspace dir = dbHelper.openSubspace(tx, path);
-
-        // Create range for scanning records
-        Range range;
-        if (attrName == null || attrValue == null) {
-            range = dir.range();
-        } else {
-            Tuple attrTuple = Tuple.from(attrValue);
-            switch (operator) {
-                case EQUALS:
-                    range = dir.subspace(Tuple.from(attrName)).subspace(attrTuple).range();
-                    break;
-                case LESS_THAN:
-                    range = dir.subspace(Tuple.from(attrName)).range(null, attrTuple);
-                    break;
-                case LESS_THAN_OR_EQUALS:
-                    range = dir.subspace(Tuple.from(attrName)).range(null, attrTuple.add(1));
-                    break;
-                case GREATER_THAN:
-                    range = dir.subspace(Tuple.from(attrName)).range(attrTuple.add(1), null);
-                    break;
-                case GREATER_THAN_OR_EQUALS:
-                    range = dir.subspace(Tuple.from(attrName)).range(attrTuple, null);
-                    break;
-                default:
-                    dbHelper.abortTransaction(tx);
-                    throw new IllegalArgumentException("Invalid ComparisonOperator");
-            }
-        }
-
-        // Scan records and create cursor
-        List<Record> records = new ArrayList<>();
-        List<KeyValue> kvs = tx.getRange(range).asList().join();
-        for (KeyValue kv : kvs) {
-            Tuple key = dir.unpack(kv.getKey());
-            Tuple value = Tuple.fromBytes(kv.getValue());
-            records.add(new Record(key.toArray(), value));
-        }
-        dbHelper.commitTransaction(tx);
-        return new CursorImpl(records, mode);
+        return null;
     }
 
   @Override
