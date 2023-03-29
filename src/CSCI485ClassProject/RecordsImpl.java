@@ -94,29 +94,35 @@ TableMetadataTransformer tblTransformer = new TableMetadataTransformer(tableName
     }
 
   @Override
-  public Cursor openCursor(String tableName, Cursor.Mode mode) {
-    return null;
-  }
+public Cursor openCursor(String tableName, Cursor.Mode mode) {
+    Transaction tx = FDBHelper.openTransaction(db, mode == Cursor.Mode.READ_WRITE);
 
-  @Override
-  public Record getFirst(Cursor cursor) {
-    return null;
-  }
+    List<String> tablePath = Arrays.asList(tableName);
+    DirectorySubspace tableSubspace = FDBHelper.createOrOpenSubspace(tx, tablePath);
 
-  @Override
-  public Record getLast(Cursor cursor) {
-    return null;
-  }
+    return new FoundationDBCursor(tx, tableSubspace, mode);
+}
 
-  @Override
-  public Record getNext(Cursor cursor) {
-    return null;
-  }
+@Override
+public Record getFirst(Cursor cursor) {
+    return ((FoundationDBCursor) cursor).getFirst();
+}
 
-  @Override
-  public Record getPrevious(Cursor cursor) {
-    return null;
-  }
+@Override
+public Record getLast(Cursor cursor) {
+    return ((FoundationDBCursor) cursor).getLast();
+}
+
+@Override
+public Record getNext(Cursor cursor) {
+    return ((FoundationDBCursor) cursor).getNext();
+}
+
+@Override
+public Record getPrevious(Cursor cursor) {
+    return ((FoundationDBCursor) cursor).getPrevious();
+}
+
 
   @Override
   public StatusCode updateRecord(Cursor cursor, String[] attrNames, Object[] attrValues) {
