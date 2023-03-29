@@ -17,11 +17,12 @@ public class RecordsImpl implements Records {
 
     public RecordsImpl(FDBHelper fdbHelper) {
         this.fdbHelper = fdbHelper;
+        db = FDBHelper.initialization();
     }
 
     @Override
     public StatusCode insertRecord(String tableName, String[] primaryKeys, Object[] primaryKeysValues, String[] attrNames, Object[] attrValues) {
-        Transaction tx = fdbHelper.openTransaction();
+        Transaction tx = fdbHelper.openTransaction(db);
 
         try {
             // Get the subspace for the table
