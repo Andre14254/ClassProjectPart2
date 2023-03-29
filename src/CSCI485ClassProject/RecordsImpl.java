@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import CSCI485ClassProject.models.AttributeType;
 import com.apple.foundationdb.KeyValue;
 import com.apple.foundationdb.Database;
 import com.apple.foundationdb.Transaction;
@@ -40,10 +41,11 @@ public class RecordsImpl implements Records {
             if (existingRecordValue != null) {
                 return StatusCode.DATA_RECORD_CREATION_RECORD_ALREADY_EXISTS;
             }
-            
+            TableMetadata tabMeta = db.getMetadata().getTableMetadata(Collections.singletonList(tableName));
+            HashMap<String, AttributeType> m = tabMeta.getAttributes();
             for (int i =0;i<attrNames.length;i++){
                 Object attr = attrValues[i];
-  AttributeType expectedType = tableAttributesNew.get(attrNames[i]);
+  AttributeType expectedType = m.get(attrNames[i]);
   if (!isValidAttributeType(attr, expectedType)) {
     FDBHelper.abortTransaction(tx);
     FDBHelper.closeTransaction(tx);
