@@ -50,7 +50,6 @@ public class RecordsImpl implements Records {
   AttributeType expectedType = m.get(attrNames[i]);
   if (!isValidAttributeType(attr, expectedType)) {
     FDBHelper.abortTransaction(tx);
-    FDBHelper.closeTransaction(tx);
     return StatusCode.DATA_RECORD_CREATION_ATTRIBUTE_TYPE_UNMATCHED;
   }
     
