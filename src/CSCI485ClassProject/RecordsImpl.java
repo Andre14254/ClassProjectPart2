@@ -29,7 +29,7 @@ public class RecordsImpl implements Records {
             List<String> tablePath = Arrays.asList(tableName);
             DirectorySubspace tableSubspace = FDBHelper.createOrOpenSubspace(tx, tablePath);
             
-            if (primaryKeys==null) {
+            if (primaryKeys==null || primaryKeys.length==0) {
                 FDBHelper.abortTransaction(tx);
                 return StatusCode.DATA_RECORD_PRIMARY_KEYS_UNMATCHED;
 }
