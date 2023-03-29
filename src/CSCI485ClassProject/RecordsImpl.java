@@ -1,7 +1,13 @@
 package CSCI485ClassProject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import com.apple.foundationdb.KeyValue;
+import com.apple.foundationdb.Transaction;
+import com.apple.foundationdb.directory.DirectorySubspace;
+import com.apple.foundationdb.tuple.Tuple;
 
 import CSCI485ClassProject.models.ComparisonOperator;
 import CSCI485ClassProject.models.Record;
@@ -15,35 +21,35 @@ public class RecordsImpl implements Records {
 
     @Override
     public StatusCode insertRecord(String tableName, String[] primaryKeys, Object[] primaryKeysValues, String[] attrNames, Object[] attrValues) {
-        Transaction tx = FDBHelper.openTransaction(db);
+        Transaction tx = fdbHelper.openTransaction();
 
-    try {
-        // Get the subspace for the table
-        List<String> tablePath = Arrays.asList(tableName);
-        DirectorySubspace tableSubspace = FDBHelper.createOrOpenSubspace(tx, tablePath);
+        try {
+            // Get the subspace for the table
+            List<String> tablePath = Arrays.asList(tableName);
+            DirectorySubspace tableSubspace = fdbHelper.createOrOpenSubspace(tx, tablePath);
 
-        // Check if the record with the same primary keys already exists
-        Tuple primaryKeyTuple = Tuple.fromArray(primaryKeysValues);
-        byte[] existingRecordValue = tx.get(tableSubspace.pack(primaryKeyTuple)).join();
-        if (existingRecordValue != null) {
-            return StatusCode.RECORD_ALREADY_EXISTS;
+            // Check if the record with the same primary keys already exists
+            Tuple primaryKeyTuple = Tuple.fromArray(primaryKeysValues);
+            byte[] existingRecordValue = tx.get(tableSubspace.pack(primaryKeyTuple)).join();
+            if (existingRecordValue != null) {
+                return StatusCode.RECORD_ALREADY_EXISTS;
+            }
+
+            // Construct the record tuple
+            Tuple recordTuple = Tuple.fromArray(attrValues);
+
+            // Add the record to the table subspace
+            tx.set(tableSubspace.pack(primaryKeyTuple), recordTuple.pack());
+
+            // Commit the transaction
+            fdbHelper.commitTransaction(tx);
+            return StatusCode.OK;
+
+        } catch (Exception e) {
+            System.out.println("ERROR: Failed to insert record: " + e.getMessage());
+            fdbHelper.abortTransaction(tx);
+            return StatusCode.ERROR;
         }
-
-        // Construct the record tuple
-        Tuple recordTuple = Tuple.fromArray(attrValues);
-
-        // Add the record to the table subspace
-        tx.set(tableSubspace.pack(primaryKeyTuple), recordTuple.pack());
-
-        // Commit the transaction
-        FDBHelper.commitTransaction(tx);
-        return StatusCode.OK;
-
-    } catch (FDBException e) {
-        System.out.println("ERROR: Failed to insert record: " + e.getMessage());
-        FDBHelper.abortTransaction(tx);
-        return StatusCode.ERROR;
-    }
     }
 
     @Override
