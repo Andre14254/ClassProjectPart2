@@ -18,7 +18,6 @@ public class RecordsImpl implements Records {
     private final Database db;
 
     public RecordsImpl() {
-        this.fdbHelper = fdbHelper;
         db = FDBHelper.initialization();
     }
 
@@ -29,7 +28,7 @@ public class RecordsImpl implements Records {
         try {
             // Get the subspace for the table
             List<String> tablePath = Arrays.asList(tableName);
-            DirectorySubspace tableSubspace = fdbHelper.createOrOpenSubspace(tx, tablePath);
+            DirectorySubspace tableSubspace = FDBHelper.createOrOpenSubspace(tx, tablePath);
 
             // Check if the record with the same primary keys already exists
             Tuple primaryKeyTuple = Tuple.from(primaryKeysValues);
@@ -45,12 +44,12 @@ public class RecordsImpl implements Records {
             tx.set(tableSubspace.pack(primaryKeyTuple), recordTuple.pack());
 
             // Commit the transaction
-            fdbHelper.commitTransaction(tx);
+            FDBHelper.commitTransaction(tx);
             return StatusCode.SUCCESS;
 
         } catch (Exception e) {
             System.out.println("ERROR: Failed to insert record: " + e.getMessage());
-            fdbHelper.abortTransaction(tx);
+            FDBHelper.abortTransaction(tx);
             return StatusCode.DATA_RECORD_PRIMARY_KEYS_UNMATCHED;
         }
     }
