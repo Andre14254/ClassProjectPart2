@@ -22,7 +22,7 @@ public class RecordsImpl implements Records {
 
     @Override
     public StatusCode insertRecord(String tableName, String[] primaryKeys, Object[] primaryKeysValues, String[] attrNames, Object[] attrValues) {
-        Transaction tx = fdbHelper.openTransaction(db);
+        Transaction tx = FDBHelper.openTransaction(db);
 
         try {
             // Get the subspace for the table
