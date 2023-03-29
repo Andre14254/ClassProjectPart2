@@ -95,32 +95,27 @@ TableMetadataTransformer tblTransformer = new TableMetadataTransformer(tableName
 
   @Override
 public Cursor openCursor(String tableName, Cursor.Mode mode) {
-    Transaction tx = FDBHelper.openTransaction(db, mode == Cursor.Mode.READ_WRITE);
-
-    List<String> tablePath = Arrays.asList(tableName);
-    DirectorySubspace tableSubspace = FDBHelper.createOrOpenSubspace(tx, tablePath);
-
-    return new FoundationDBCursor(tx, tableSubspace, mode);
+    return null
 }
 
 @Override
 public Record getFirst(Cursor cursor) {
-    return ((FoundationDBCursor) cursor).getFirst();
+    return null;
 }
 
 @Override
 public Record getLast(Cursor cursor) {
-    return ((FoundationDBCursor) cursor).getLast();
+    return null;
 }
 
 @Override
 public Record getNext(Cursor cursor) {
-    return ((FoundationDBCursor) cursor).getNext();
+    return null;
 }
 
 @Override
 public Record getPrevious(Cursor cursor) {
-    return ((FoundationDBCursor) cursor).getPrevious();
+    return null;
 }
 
 
