@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.apple.foundationdb.KeyValue;
+import com.apple.foundationdb.Database;
 import com.apple.foundationdb.Transaction;
 import com.apple.foundationdb.directory.DirectorySubspace;
 import com.apple.foundationdb.tuple.Tuple;
