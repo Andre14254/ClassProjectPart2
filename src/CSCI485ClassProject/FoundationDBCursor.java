@@ -1,3 +1,5 @@
+package CSCI485ClassProject;
+
 import com.apple.foundationdb.*;
 import com.apple.foundationdb.directory.DirectorySubspace;
 import com.apple.foundationdb.tuple.Tuple;
