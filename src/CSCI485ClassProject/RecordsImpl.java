@@ -32,7 +32,7 @@ public class RecordsImpl implements Records {
             Tuple primaryKeyTuple = Tuple.fromArray(primaryKeysValues);
             byte[] existingRecordValue = tx.get(tableSubspace.pack(primaryKeyTuple)).join();
             if (existingRecordValue != null) {
-                return StatusCode.RECORD_ALREADY_EXISTS;
+                return StatusCode.DATA_RECORD_CREATION_RECORD_ALREADY_EXISTS;
             }
 
             // Construct the record tuple
@@ -43,12 +43,12 @@ public class RecordsImpl implements Records {
 
             // Commit the transaction
             fdbHelper.commitTransaction(tx);
-            return StatusCode.OK;
+            return StatusCode.SUCCESS;
 
         } catch (Exception e) {
             System.out.println("ERROR: Failed to insert record: " + e.getMessage());
             fdbHelper.abortTransaction(tx);
-            return StatusCode.ERROR;
+            return StatusCode.DATA_RECORD_PRIMARY_KEYS_UNMATCHED;
         }
     }
 
