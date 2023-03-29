@@ -28,7 +28,12 @@ public class RecordsImpl implements Records {
             // Get the subspace for the table
             List<String> tablePath = Arrays.asList(tableName);
             DirectorySubspace tableSubspace = FDBHelper.createOrOpenSubspace(tx, tablePath);
-
+            
+            if (primaryKeys==null) {
+                FDBHelper.abortTransaction(tx);
+                return StatusCode.DATA_RECORD_PRIMARY_KEYS_UNMATCHED;
+}
+            
             // Check if the record with the same primary keys already exists
             Tuple primaryKeyTuple = Tuple.from(primaryKeysValues);
             byte[] existingRecordValue = tx.get(tableSubspace.pack(primaryKeyTuple)).join();
