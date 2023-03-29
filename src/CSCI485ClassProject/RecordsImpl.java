@@ -95,7 +95,7 @@ TableMetadataTransformer tblTransformer = new TableMetadataTransformer(tableName
 
   @Override
 public Cursor openCursor(String tableName, Cursor.Mode mode) {
-    return null
+    return null;
 }
 
 @Override
