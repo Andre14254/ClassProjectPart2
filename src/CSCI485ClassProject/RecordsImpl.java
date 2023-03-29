@@ -32,14 +32,14 @@ public class RecordsImpl implements Records {
             DirectorySubspace tableSubspace = fdbHelper.createOrOpenSubspace(tx, tablePath);
 
             // Check if the record with the same primary keys already exists
-            Tuple primaryKeyTuple = Tuple.fromArray(primaryKeysValues);
+            Tuple primaryKeyTuple = Tuple.from(primaryKeysValues);
             byte[] existingRecordValue = tx.get(tableSubspace.pack(primaryKeyTuple)).join();
             if (existingRecordValue != null) {
                 return StatusCode.DATA_RECORD_CREATION_RECORD_ALREADY_EXISTS;
             }
 
             // Construct the record tuple
-            Tuple recordTuple = Tuple.fromArray(attrValues);
+            Tuple recordTuple = Tuple.from(attrValues);
 
             // Add the record to the table subspace
             tx.set(tableSubspace.pack(primaryKeyTuple), recordTuple.pack());
